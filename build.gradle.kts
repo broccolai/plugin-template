@@ -32,12 +32,14 @@ dependencies {
     runtimeDownloadApi("cloud.commandframework", "cloud-paper", "1.8.4")
     runtimeDownloadApi("com.google.inject", "guice", "7.0.0")
 
-    runtimeDownloadApi("com.zaxxer", "HikariCP", "5.1.0")
+    runtimeDownloadApi("org.spongepowered", "configurate-hocon", "4.1.2")
+    runtimeDownloadApi("com.github.ben-manes.caffeine", "caffeine", "3.1.0")
+
+    // database
+    runtimeDownloadApi("com.zaxxer", "HikariCP", "5.0.1")
     runtimeDownloadApi("org.flywaydb", "flyway-core", "10.0.0")
     runtimeDownloadApi("com.h2database", "h2", "2.2.224")
-    runtimeDownloadApi("org.spongepowered", "configurate-hocon", "4.1.2")
-
-    runtimeDownloadApi("com.github.ben-manes.caffeine", "caffeine", "3.1.0")
+    runtimeDownloadApi("org.jdbi", "jdbi3-core", "3.41.3")
 }
 
 configurations.runtimeDownload {
