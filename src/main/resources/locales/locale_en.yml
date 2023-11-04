@@ -1,0 +1,3 @@
+prefix: "<color:#f5a5a5><bold>T <dark_gray>»<reset>"
+
+test: "<prefix> hello template plugin!"

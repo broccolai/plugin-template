@@ -19,6 +19,4 @@ public interface UserService extends Service {
 
     String name(User user);
 
-    Collection<String> onlineNames();
-
 }
