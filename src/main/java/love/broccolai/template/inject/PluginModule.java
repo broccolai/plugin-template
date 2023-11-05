@@ -16,10 +16,12 @@ import java.nio.file.Path;
 import javax.sql.DataSource;
 import love.broccolai.template.TemplatePlugin;
 import love.broccolai.template.commands.cloud.ExceptionHandler;
+import love.broccolai.template.data.UserMapper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
+import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
 import org.slf4j.Logger;
 
@@ -54,13 +56,25 @@ public final class PluginModule extends AbstractModule {
         hikariConfig.setJdbcUrl("jdbc:h2:" + file.toAbsolutePath() + ";MODE=MySQL;DATABASE_TO_LOWER=TRUE");
 
         hikariConfig.setMaximumPoolSize(10);
-        return new HikariDataSource(hikariConfig);
+
+        DataSource dataSource = new HikariDataSource(hikariConfig);
+
+        //todo(josh): find better place for this?
+        Flyway.configure(TemplatePlugin.class.getClassLoader())
+            .baselineOnMigrate(true)
+            .locations("classpath:queries/migrations")
+            .dataSource(dataSource)
+            .load()
+            .migrate();
+
+        return dataSource;
     }
 
     @Provides
     @Singleton
-    public Jdbi provideJdbi(final HikariDataSource dataSource) {
-        return Jdbi.create(dataSource);
+    public Jdbi provideJdbi(final DataSource dataSource) {
+        return Jdbi.create(dataSource)
+            .registerRowMapper(new UserMapper());
     }
 
     @Provides

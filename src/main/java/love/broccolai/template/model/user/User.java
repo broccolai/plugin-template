@@ -11,4 +11,8 @@ public interface User {
 
     UUID uuid();
 
+    int data();
+
+    void data(int data);
+
 }

@@ -14,4 +14,16 @@ public final class ConsoleUser implements User {
         return FAKE_ID;
     }
 
+    //todo(josh): consider dropping console user, purpose?
+
+    @Override
+    public int data() {
+        return -1;
+    }
+
+    @Override
+    public void data(final int data) {
+
+    }
+
 }

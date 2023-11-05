@@ -65,7 +65,7 @@ public final class ConfigurationModule extends AbstractModule {
     }
 
     private String createLocaleFileName(final String source) {
-        return "locale_" + source + ".yml";
+        return "locale_" + source + ".conf";
     }
 
     private <T extends Configuration> T configuration(

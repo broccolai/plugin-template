@@ -10,6 +10,7 @@ import love.broccolai.template.inject.ConfigurationModule;
 import love.broccolai.template.inject.FactoryModule;
 import love.broccolai.template.inject.PluginModule;
 import love.broccolai.template.inject.ServiceModule;
+import love.broccolai.template.service.user.provider.UserCacheProvider;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -18,20 +19,28 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 @DefaultQualifier(NonNull.class)
 public final class TemplatePlugin extends JavaPlugin {
 
-    private static final Key<CommandManager<CommandSender>> COMMAND_MANAGER_KEY = Key.get(new TypeLiteral<>() {});
+    private static final Key<CommandManager<CommandSender>> COMMAND_MANAGER_KEY = Key.get(new TypeLiteral<>() {
+    });
+
+    private Injector injector;
 
     @Override
     public void onEnable() {
         this.getDataFolder().mkdirs();
 
-        Injector injector = Guice.createInjector(
+        this.injector = Guice.createInjector(
             new PluginModule(this),
             new ConfigurationModule(),
             new FactoryModule(),
             new ServiceModule()
         );
 
-        this.registerCommands(injector);
+        this.registerCommands(this.injector);
+    }
+
+    @Override
+    public void onDisable() {
+        this.injector.getInstance(UserCacheProvider.class).close();
     }
 
     private void registerCommands(final Injector injector) {
@@ -41,10 +50,6 @@ public final class TemplatePlugin extends JavaPlugin {
             PluginCommand command = injector.getInstance(clazz);
             command.register(commandManager);
         }
-    }
-
-    public static ClassLoader classLoader() {
-        return TemplatePlugin.class.getClassLoader();
     }
 
 }

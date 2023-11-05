@@ -2,44 +2,63 @@ package love.broccolai.template.commands.command;
 
 import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
+import cloud.commandframework.arguments.standard.IntegerArgument;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
 import love.broccolai.template.factory.CloudArgumentFactory;
+import love.broccolai.template.model.user.User;
 import love.broccolai.template.service.message.MessageService;
-import love.broccolai.template.service.user.UserService;
 import org.bukkit.command.CommandSender;
 
 public final class TemplateCommand implements PluginCommand {
 
     private final CloudArgumentFactory argumentFactory;
     private final MessageService messageService;
-    private final UserService userService;
 
     @Inject
     public TemplateCommand(
         final CloudArgumentFactory argumentFactory,
-        final MessageService messageService,
-        final UserService userService
+        final MessageService messageService
     ) {
         this.argumentFactory = argumentFactory;
         this.messageService = messageService;
-        this.userService = userService;
     }
 
     @Override
     public void register(final CommandManager<CommandSender> commandManager) {
-        Command.Builder<CommandSender> baseCommand = commandManager.commandBuilder("template");
+        Command.Builder<CommandSender> baseCommand = commandManager.commandBuilder("template-test");
 
         commandManager.command(baseCommand
-            .literal("test")
-            .handler(this::handleSelect)
+            .literal("store")
+            .argument(this.argumentFactory.user("target", true))
+            .argument(IntegerArgument.of("data"))
+            .handler(this::handleStore)
+        );
+
+        commandManager.command(baseCommand
+            .literal("retrieve")
+            .argument(this.argumentFactory.user("target", true))
+            .handler(this::handleRetrieve)
         );
     }
 
-    private void handleSelect(final CommandContext<CommandSender> context) {
+    private void handleStore(final CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
+        User target = context.get("target");
+        Integer data = context.get("data");
 
-        this.messageService.test(sender);
+        target.data(data);
+
+        this.messageService.store(sender, data);
+    }
+
+    private void handleRetrieve(final CommandContext<CommandSender> context) {
+        CommandSender sender = context.getSender();
+        User target = context.get("target");
+
+        int data = target.data();
+
+        this.messageService.retrieve(sender, data);
     }
 
 }

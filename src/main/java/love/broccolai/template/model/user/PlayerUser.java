@@ -8,14 +8,26 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 public final class PlayerUser implements User {
 
     private final UUID uuid;
+    private int data;
 
-    public PlayerUser(final UUID uuid) {
+    public PlayerUser(final UUID uuid, final int data) {
         this.uuid = uuid;
+        this.data = data;
     }
 
     @Override
     public UUID uuid() {
         return this.uuid;
+    }
+
+    @Override
+    public int data() {
+        return this.data;
+    }
+
+    @Override
+    public void data(final int data) {
+        this.data = data;
     }
 
 }

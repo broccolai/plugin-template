@@ -20,7 +20,7 @@ public final class UserCreateProvider implements PartialUserProvider {
         Map<UUID, User> results = new HashMap<>();
 
         for (UUID request : requests) {
-            results.put(request, new PlayerUser(request));
+            results.put(request, new PlayerUser(request, -1));
         }
 
         return results;
