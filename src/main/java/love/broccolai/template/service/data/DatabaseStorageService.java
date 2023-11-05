@@ -10,14 +10,14 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 import org.jdbi.v3.core.Jdbi;
 
 @DefaultQualifier(NonNull.class)
-public class H2DataService implements DataService {
+public class DatabaseStorageService implements StorageService {
 
     private final QueriesLocator locator = new QueriesLocator();
 
     private final Jdbi jdbi;
 
     @Inject
-    public H2DataService(final Jdbi jdbi) {
+    public DatabaseStorageService(final Jdbi jdbi) {
         this.jdbi = jdbi;
     }
 

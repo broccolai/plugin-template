@@ -1,4 +1,4 @@
-package love.broccolai.template.factory;
+package love.broccolai.template.commands.cloud;
 
 import com.google.inject.assistedinject.Assisted;
 import love.broccolai.template.commands.arguments.ProfileArgument;
@@ -9,7 +9,7 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 public interface CloudArgumentFactory {
 
     ProfileArgument profile(
-        @Assisted("name") @NonNull String name,
+        @Assisted("name") String name,
         @Assisted("required") boolean required
     );
 

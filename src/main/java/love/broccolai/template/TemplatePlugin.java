@@ -13,6 +13,7 @@ import love.broccolai.template.inject.ServiceModule;
 import love.broccolai.template.service.profile.provider.ProfileCacheProvider;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
@@ -22,8 +23,9 @@ public final class TemplatePlugin extends JavaPlugin {
     private static final Key<CommandManager<CommandSender>> COMMAND_MANAGER_KEY = Key.get(new TypeLiteral<>() {
     });
 
-    private Injector injector;
+    private @MonotonicNonNull Injector injector;
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
         this.getDataFolder().mkdirs();

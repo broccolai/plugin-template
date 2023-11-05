@@ -28,7 +28,7 @@ public final class ReflectionHelper {
     public static <T> Collection<T> parametersAnnotatedBy(
             final Class<? extends Annotation> annotationClass,
             final Method method,
-            final @Nullable Object @NonNull [] objectParameters
+            final @Nullable Object[] objectParameters
     ) {
         Collection<T> results = new ArrayList<>();
         Parameter[] reflectedParameters = method.getParameters();
@@ -47,7 +47,7 @@ public final class ReflectionHelper {
     public static <T> @Nullable T parameterAnnotatedBy(
             final Class<? extends Annotation> annotationClass,
             final Method method,
-            final @Nullable Object @NonNull [] objectParameters
+            final @Nullable Object[] objectParameters
     ) {
         Collection<T> parameters = parametersAnnotatedBy(annotationClass, method, objectParameters);
 

@@ -20,7 +20,7 @@ public final class ExceptionHandler {
     }
 
     private MinecraftExceptionHandler<CommandSender> generateAdventureHandler() {
-        return new MinecraftExceptionHandler<CommandSender>();
+        return new MinecraftExceptionHandler<>();
     }
 
     public void apply(final CommandManager<CommandSender> commandManager) {

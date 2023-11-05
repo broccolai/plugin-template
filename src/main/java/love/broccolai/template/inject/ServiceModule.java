@@ -4,8 +4,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import io.leangen.geantyref.TypeToken;
 import love.broccolai.template.config.LocaleConfiguration;
-import love.broccolai.template.service.data.DataService;
-import love.broccolai.template.service.data.H2DataService;
+import love.broccolai.template.service.data.DatabaseStorageService;
+import love.broccolai.template.service.data.StorageService;
 import love.broccolai.template.service.message.MessageRenderer;
 import love.broccolai.template.service.message.MessageService;
 import love.broccolai.template.service.message.placeholder.NumberPlaceholderResolver;
@@ -28,7 +28,7 @@ public class ServiceModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        this.bind(DataService.class).to(H2DataService.class);
+        this.bind(StorageService.class).to(DatabaseStorageService.class);
         this.bind(ProfileService.class).to(PipelineProfileService.class);
         this.bind(TaskService.class).to(PaperTaskService.class);
     }

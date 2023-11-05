@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import love.broccolai.template.model.profile.Profile;
-import love.broccolai.template.service.data.DataService;
+import love.broccolai.template.service.data.StorageService;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
@@ -15,11 +15,11 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 @DefaultQualifier(NonNull.class)
 public final class ProfileDataProvider implements PartialProfileProvider {
 
-    private final DataService dataService;
+    private final StorageService storageService;
 
     @Inject
-    public ProfileDataProvider(final DataService dataService) {
-        this.dataService = dataService;
+    public ProfileDataProvider(final StorageService storageService) {
+        this.storageService = storageService;
     }
 
     @Override
@@ -27,7 +27,7 @@ public final class ProfileDataProvider implements PartialProfileProvider {
         Map<UUID, Profile> results = new HashMap<>();
 
         for (final UUID uuid : requests) {
-            this.dataService
+            this.storageService
                 .loadProfile(uuid)
                 .ifPresent(profile -> results.put(uuid, profile));
         }

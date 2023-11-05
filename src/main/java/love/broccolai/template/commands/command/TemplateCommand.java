@@ -5,7 +5,7 @@ import cloud.commandframework.CommandManager;
 import cloud.commandframework.arguments.standard.IntegerArgument;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
-import love.broccolai.template.factory.CloudArgumentFactory;
+import love.broccolai.template.commands.cloud.CloudArgumentFactory;
 import love.broccolai.template.model.profile.Profile;
 import love.broccolai.template.service.message.MessageService;
 import org.bukkit.command.CommandSender;

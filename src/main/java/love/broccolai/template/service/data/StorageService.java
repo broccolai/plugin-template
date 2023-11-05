@@ -8,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
 @DefaultQualifier(NonNull.class)
-public interface DataService extends Service {
+public interface StorageService extends Service {
 
     Optional<Profile> loadProfile(UUID uuid);
 

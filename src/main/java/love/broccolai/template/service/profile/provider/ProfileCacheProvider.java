@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import love.broccolai.template.model.profile.Profile;
-import love.broccolai.template.service.data.DataService;
+import love.broccolai.template.service.data.StorageService;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
@@ -19,16 +19,16 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 @DefaultQualifier(NonNull.class)
 public final class ProfileCacheProvider implements PartialProfileProvider, Closeable {
 
-    private final DataService dataService;
+    private final StorageService storageService;
 
     private final Cache<UUID, Profile> uuidCache;
 
     @Inject
-    public ProfileCacheProvider(final DataService dataService) {
-        this.dataService = dataService;
+    public ProfileCacheProvider(final StorageService storageService) {
+        this.storageService = storageService;
         this.uuidCache = CacheBuilder.newBuilder()
                 .maximumSize(100)
-                .<UUID, Profile>removalListener(notification -> this.dataService.saveProfile(notification.getValue()))
+                .<UUID, Profile>removalListener(notification -> this.storageService.saveProfile(notification.getValue()))
                 .build();
     }
 
@@ -53,7 +53,7 @@ public final class ProfileCacheProvider implements PartialProfileProvider, Close
 
     @Override
     public void close() {
-        this.uuidCache.asMap().values().forEach(this.dataService::saveProfile);
+        this.uuidCache.asMap().values().forEach(this.storageService::saveProfile);
     }
 
 }
