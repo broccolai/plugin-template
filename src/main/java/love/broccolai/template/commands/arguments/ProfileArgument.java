@@ -10,8 +10,8 @@ import com.google.inject.assistedinject.AssistedInject;
 import java.util.List;
 import java.util.Queue;
 import java.util.regex.Pattern;
-import love.broccolai.template.model.user.User;
-import love.broccolai.template.service.user.UserService;
+import love.broccolai.template.model.profile.Profile;
+import love.broccolai.template.service.profile.ProfileService;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,42 +20,42 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
 @DefaultQualifier(NonNull.class)
-public class UserArgument extends CommandArgument<CommandSender, User> {
+public class ProfileArgument extends CommandArgument<CommandSender, Profile> {
 
     @AssistedInject
-    public UserArgument(
-            final UserService userService,
+    public ProfileArgument(
+            final ProfileService profileService,
             final @Assisted("name") String name,
             final @Assisted("required") boolean required
     ) {
-        super(required, name, new UserParser(userService), User.class);
+        super(required, name, new ProfileParser(profileService), Profile.class);
     }
 
-    public static final class UserParser implements ArgumentParser<CommandSender, User> {
+    public static final class ProfileParser implements ArgumentParser<CommandSender, Profile> {
 
         private static final Pattern USERNAME_PATTERN = Pattern.compile("^[a-zA-Z0-9_]{2,16}$");
 
-        private final UserService userService;
+        private final ProfileService profileService;
 
-        public UserParser(final UserService userService) {
-            this.userService = userService;
+        public ProfileParser(final ProfileService profileService) {
+            this.profileService = profileService;
         }
 
         @Override
-        public ArgumentParseResult<User> parse(
+        public ArgumentParseResult<Profile> parse(
                 final CommandContext<CommandSender> commandContext,
                 final Queue<String> inputQueue
         ) {
             @Nullable String input = inputQueue.peek();
 
             if (input == null || !USERNAME_PATTERN.matcher(input).matches()) {
-                return ArgumentParseResult.failure(new NoInputProvidedException(UserArgument.class, commandContext));
+                return ArgumentParseResult.failure(new NoInputProvidedException(ProfileArgument.class, commandContext));
             }
 
-            User user = this.userService.get(input);
+            Profile profile = this.profileService.get(input);
 
             inputQueue.remove();
-            return ArgumentParseResult.success(user);
+            return ArgumentParseResult.success(profile);
         }
 
         @Override

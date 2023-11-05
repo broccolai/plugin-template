@@ -10,7 +10,7 @@ import love.broccolai.template.inject.ConfigurationModule;
 import love.broccolai.template.inject.FactoryModule;
 import love.broccolai.template.inject.PluginModule;
 import love.broccolai.template.inject.ServiceModule;
-import love.broccolai.template.service.user.provider.UserCacheProvider;
+import love.broccolai.template.service.profile.provider.ProfileCacheProvider;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -40,7 +40,7 @@ public final class TemplatePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.injector.getInstance(UserCacheProvider.class).close();
+        this.injector.getInstance(ProfileCacheProvider.class).close();
     }
 
     private void registerCommands(final Injector injector) {

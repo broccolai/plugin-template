@@ -11,10 +11,10 @@ import love.broccolai.template.service.message.MessageService;
 import love.broccolai.template.service.message.placeholder.NumberPlaceholderResolver;
 import love.broccolai.template.service.message.placeholder.StringPlaceholderResolver;
 import love.broccolai.template.service.message.receiver.BasicReceiverResolver;
+import love.broccolai.template.service.profile.PipelineProfileService;
+import love.broccolai.template.service.profile.ProfileService;
 import love.broccolai.template.service.task.PaperTaskService;
 import love.broccolai.template.service.task.TaskService;
-import love.broccolai.template.service.user.PipelineUserService;
-import love.broccolai.template.service.user.UserService;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.moonshine.Moonshine;
 import net.kyori.moonshine.exception.scan.UnscannableMethodException;
@@ -29,7 +29,7 @@ public class ServiceModule extends AbstractModule {
     @Override
     protected void configure() {
         this.bind(DataService.class).to(H2DataService.class);
-        this.bind(UserService.class).to(PipelineUserService.class);
+        this.bind(ProfileService.class).to(PipelineProfileService.class);
         this.bind(TaskService.class).to(PaperTaskService.class);
     }
 

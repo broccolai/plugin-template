@@ -6,7 +6,7 @@ import cloud.commandframework.arguments.standard.IntegerArgument;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
 import love.broccolai.template.factory.CloudArgumentFactory;
-import love.broccolai.template.model.user.User;
+import love.broccolai.template.model.profile.Profile;
 import love.broccolai.template.service.message.MessageService;
 import org.bukkit.command.CommandSender;
 
@@ -30,21 +30,21 @@ public final class TemplateCommand implements PluginCommand {
 
         commandManager.command(baseCommand
             .literal("store")
-            .argument(this.argumentFactory.user("target", true))
+            .argument(this.argumentFactory.profile("target", true))
             .argument(IntegerArgument.of("data"))
             .handler(this::handleStore)
         );
 
         commandManager.command(baseCommand
             .literal("retrieve")
-            .argument(this.argumentFactory.user("target", true))
+            .argument(this.argumentFactory.profile("target", true))
             .handler(this::handleRetrieve)
         );
     }
 
     private void handleStore(final CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
-        User target = context.get("target");
+        Profile target = context.get("target");
         Integer data = context.get("data");
 
         target.data(data);
@@ -54,7 +54,7 @@ public final class TemplateCommand implements PluginCommand {
 
     private void handleRetrieve(final CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
-        User target = context.get("target");
+        Profile target = context.get("target");
 
         int data = target.data();
 

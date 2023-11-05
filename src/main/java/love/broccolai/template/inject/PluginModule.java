@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import javax.sql.DataSource;
 import love.broccolai.template.TemplatePlugin;
 import love.broccolai.template.commands.cloud.ExceptionHandler;
-import love.broccolai.template.data.UserMapper;
+import love.broccolai.template.data.ProfileMapper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -74,7 +74,7 @@ public final class PluginModule extends AbstractModule {
     @Singleton
     public Jdbi provideJdbi(final DataSource dataSource) {
         return Jdbi.create(dataSource)
-            .registerRowMapper(new UserMapper());
+            .registerRowMapper(new ProfileMapper());
     }
 
     @Provides
